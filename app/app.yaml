@@ -17,24 +17,21 @@ handlers:
   script: app.py
   login: required
 
-- url: /.*
-  script: app.py
-
 # html-5 boilerplate compatible handlers for redirects to /static/: 
 
 - url: /apple-touch-icon\.png
   mime_type: image/png
-  static_files: static/img/logo.png
-  upload: static/img/logo.png
+  static_files: static/apple-touch-icon.png
+  upload: static/apple-touch-icon.png
 
 - url: /favicon\.ico
   mime_type: image/png
-  static_files: static/img/sm_logo.png
-  upload: static/img/sm_logo.png
+  static_files: static/favicon.ico
+  upload: static/favicon.ico
 
-- url: /(robots\.txt|crossdomain\.xml)
+- url: /(robots\.txt|humans\.txt|crossdomain\.xml)
   static_files: static/\1
-  upload: static/(robots\.txt|crossdomain\.xml)
+  upload: static/(robots\.txt|humans\.txt|crossdomain\.xml)
 
 - url: /img/(.*\.(gif|png|jpg))
   static_files: static/img/\1
@@ -59,3 +56,7 @@ handlers:
   static_files: static/\1
   upload: static/(.*\.html)
     
+# All other requests go to the main app
+
+- url: /.*
+  script: app.py
