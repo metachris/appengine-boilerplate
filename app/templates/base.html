@@ -37,20 +37,11 @@
 <body lang="en" >
 
   <div id="container">
-    <header>
-
-    </header>
-    
-    <div id="main" role="main">
-    </div>
-    
-    <footer>
-
-    </footer>
+    <header>{% block header %}{% endblock %}</header>    
+    <div id="main" role="main">{% block main %}{% endblock %}</div>
+    <footer>{% block footer %}{% endblock %}</footer>
   </div> <!--! end of #container -->
 
-
-  <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.js"></script>
@@ -69,7 +60,6 @@
   <![endif]-->
 
 
-  <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
   <script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
