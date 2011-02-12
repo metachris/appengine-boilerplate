@@ -12,19 +12,20 @@ from models import *
 # Setup jinja templating
 template_dirs = []
 template_dirs.append(os.path.join(os.path.dirname(__file__), 'templates'))
-env = Environment(loader = FileSystemLoader(template_dirs))
+env = Environment(loader=FileSystemLoader(template_dirs))
 
 
 # Google sites
 class GoogleSignIn(webapp.RequestHandler):
     def get(self):
-        user = users.get_current_user() 
+        user = users.get_current_user()
         url = users.create_login_url("/")
         self.redirect(url)
 
+
 class GoogleSignOut(webapp.RequestHandler):
     def get(self):
-        user = users.get_current_user() 
+        user = users.get_current_user()
         url = users.create_logout_url("/")
         self.redirect(url)
 
