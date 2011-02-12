@@ -1,0 +1,9 @@
+cron:
+- description: hourly 1
+  url: /services/task1
+  schedule: every 1 hours synchronized
+  
+- description: every minute 
+  url: /services/task2
+  schedule: every 1 minutes synchronized
+
