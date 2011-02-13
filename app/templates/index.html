@@ -2,6 +2,6 @@
 
 {% block main %}
 
-{% if user %}welcome {{ user }}{% else %}<a href='/login'>Sign in</a>{% endif %}
+{% if user %}welcome {{ user }}. <a href='/logout'>Log out</a>{% else %}<a href='/login'>Sign in</a>{% endif %}
 
 {% endblock %}

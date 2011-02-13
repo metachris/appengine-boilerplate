@@ -1,2 +1,2 @@
 
-[ [ After logout stay on same page? 
+[ ] After logout stay on same page? 

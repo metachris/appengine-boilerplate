@@ -4,6 +4,8 @@ AppEngine boilerplate with several out of the box goodies:
 * [Jinja2 templating engine](https://github.com/mitsuhiko/jinja2)
 * OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
 
+You can see a it in action [here](http://ae-boilerplate.appspot.com).
+
 Jinja2 Templating Engine
 ------------------------
 Alternative templating engine with similar syntax to AppEngine and Django
@@ -54,12 +56,14 @@ OpenID Integration
 User authentication with OpenID works out of the box, including a nice user 
 interface with the [openid-selector] [1] jQuery plugin (also used by [stackoverflow] [2]).
 
+![Alt text](http://lh4.ggpht.com/_IfEh7XYTTeE/STA1yGHn79I/AAAAAAAAADc/IXKrRpick4w/step1.png)
+
 What is not provided are private areas defined in app.yaml, which will ask
 unauthenticated users to login and redirect them. See the following resources
 for more infos:
 
-* http://code.google.com/appengine/articles/openid.html
-* http://blog.notdot.net/2010/05/Using-OpenID-authentication-on-App-Engine
+* [http://code.google.com/appengine/articles/openid.html](http://code.google.com/appengine/articles/openid.html)
+* [http://blog.notdot.net/2010/05/Using-OpenID-authentication-on-App-Engine](http://code.google.com/appengine/articles/openid.html)
     
    [1]: http://code.google.com/p/openid-selector/
    [2]: http://stackoverflow.com/users/login

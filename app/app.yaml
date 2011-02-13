@@ -1,4 +1,5 @@
-application: test-221
+# Replace 'ae-boilerplate' with your application name
+application: ae-boilerplate
 version: 1 
 runtime: python
 api_version: 1
