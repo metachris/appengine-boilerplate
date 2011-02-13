@@ -1,0 +1,22 @@
+# Task queue configuration
+# http://code.google.com/appengine/docs/python/config/queue.html
+#
+#queue:
+#- name: fooqueue
+#  rate: 1/s
+#  bucked_size:40
+#  retry_parameters:
+#    task_retry_limit: 7
+#    task_age_limit: 2d
+#- name: barqueue
+#  rate: 1/s
+#  retry_parameters:
+#    min_backoff_seconds: 10
+#    max_backoff_seconds: 200
+#    max_doublings: 0
+#- name: bazqueue
+#  rate: 1/s
+#  retry_parameters:
+#    min_backoff_seconds: 10
+#    max_backoff_seconds: 200
+#    max_doublings: 2

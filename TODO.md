@@ -1,2 +1,11 @@
+Important
+---------
 
-[ ] After logout stay on same page? 
+  [ ] 
+
+Think about
+-----------
+
+  [ ] OAuth: Twitter, Facebook, LinkedIn, Dropbox, etc.
+  [ ] After logout stay on same page? 
+  
