@@ -9,11 +9,9 @@ from handlers import *
 
 urls = [
     (r'/', Main),
-    #(r'/feeds', Feeds),
-    #(r'/profile/([-\w]+)', Profile),
-    #(r'/signin', SignIn),
-    #(r'/signout', SignOut),
-    #(r'/test', Test),
+    (r'/login', LogIn),
+    (r'/lognout', LogOut),
+    #(r'/item/([-\w]+)', Item),
 ]
 
 application = webapp.WSGIApplication(urls, debug=True)

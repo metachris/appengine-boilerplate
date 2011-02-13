@@ -9,6 +9,9 @@ builtins:
 - datastore_admin: on
 
 handlers:
+- url: /_ah/login_required
+  script: do_openid_login.py
+
 - url: /services.*
   script: services.py
   login: admin
@@ -33,9 +36,9 @@ handlers:
   static_files: static/\1
   upload: static/(robots\.txt|humans\.txt|crossdomain\.xml)
 
-- url: /img/(.*\.(gif|png|jpg))
-  static_files: static/img/\1
-  upload: static/img/(.*\.(gif|png|jpg))
+- url: /images/(.*\.(gif|png|jpg))
+  static_files: static/images/\1
+  upload: static/images/(.*\.(gif|png|jpg))
   
 - url: /swf/(.*\.swf)
   static_files: static/swf/\1

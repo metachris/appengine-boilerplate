@@ -16,14 +16,16 @@ env = Environment(loader=FileSystemLoader(template_dirs))
 
 
 # Google sites
-class GoogleSignIn(webapp.RequestHandler):
+class LogIn(webapp.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        url = users.create_login_url("/")
-        self.redirect(url)
+        html = env.get_template('login.html').render()
+        self.response.out.write(html)
+        #user = users.get_current_user()
+        #url = users.create_login_url("/")
+        #self.redirect(url)
 
 
-class GoogleSignOut(webapp.RequestHandler):
+class LogOut(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         url = users.create_logout_url("/")

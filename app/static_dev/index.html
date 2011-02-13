@@ -13,7 +13,7 @@
 
   <title></title>
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Chris Hager" >
 
   <!--  Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +32,7 @@
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
   <script src="js/libs/modernizr-1.6.min.js"></script>
 
+  {% block head %}{% endblock %}
 </head>
 
 <body lang="en" >
@@ -60,9 +61,9 @@
   
   <!-- scripts concatenated and minified via ant build script-->
   <script src="js/plugins.js"></script>
+  {% block scripts %}{% endblock %}
   <script src="js/script.js"></script>
   <!-- end concatenated and minified scripts-->
-  
   
   <!--[if lt IE 7 ]>
     <script src="js/libs/dd_belatedpng.js"></script>
