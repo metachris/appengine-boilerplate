@@ -11,6 +11,23 @@ covered by the BSD. You can do with it whatever you want!
 
    [1]: http://www.opensource.org/licenses/bsd-license.php
 
+
+OpenID Integration
+------------------
+
+User authentication with OpenID works out of the box, including a nice user 
+interface with the [openid-selector] [1] jQuery plugin (also used by [stackoverflow] [2]).
+
+![Alt text](http://lh4.ggpht.com/_IfEh7XYTTeE/STA1yGHn79I/AAAAAAAAADc/IXKrRpick4w/step1.png)
+
+More infos about appengine and openid:
+
+* [http://code.google.com/appengine/articles/openid.html](http://code.google.com/appengine/articles/openid.html)
+* [http://blog.notdot.net/2010/05/Using-OpenID-authentication-on-App-Engine](http://code.google.com/appengine/articles/openid.html)
+    
+   [1]: http://code.google.com/p/openid-selector/
+   [2]: http://stackoverflow.com/users/login
+
 Jinja2 Templating Engine
 ------------------------
 Alternative templating engine with similar syntax to AppEngine and Django
@@ -57,19 +74,3 @@ to ``/static_dev/publish``, to upload the optimized version:
      
    [1]: https://github.com/paulirish/html5-boilerplate
     
-OpenID Integration
-==================
-
-User authentication with OpenID works out of the box, including a nice user 
-interface with the [openid-selector] [1] jQuery plugin (also used by [stackoverflow] [2]).
-
-![Alt text](http://lh4.ggpht.com/_IfEh7XYTTeE/STA1yGHn79I/AAAAAAAAADc/IXKrRpick4w/step1.png)
-
-More infos about appengine and openid:
-
-* [http://code.google.com/appengine/articles/openid.html](http://code.google.com/appengine/articles/openid.html)
-* [http://blog.notdot.net/2010/05/Using-OpenID-authentication-on-App-Engine](http://code.google.com/appengine/articles/openid.html)
-    
-   [1]: http://code.google.com/p/openid-selector/
-   [2]: http://stackoverflow.com/users/login
-
