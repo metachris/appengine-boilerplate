@@ -15,16 +15,16 @@ handlers:
   script: services.py
   login: admin
 
-# If authenticated user, AE will ask for login and redirect 
+# If non-authenticated user, appengine will ask for login and redirect afterwards: 
 - url: /account
   script: app.py
   login: required
 
-# Handler for login for restricted area 
+# Override appengine url to provide custom OpenID login page 
 - url: /_ah/login_required
   script: app.py
 
-# html-5 boilerplate redirects to /static/... 
+# html-5 boilerplate redirects from /... to /static/... 
 - url: /apple-touch-icon\.png
   mime_type: image/png
   static_files: static/apple-touch-icon.png
@@ -62,6 +62,6 @@ handlers:
   static_files: static/\1
   upload: static/(.*\.html)
     
-# All other requests go to the main app
+# All other requests go to app.py
 - url: /.*
   script: app.py

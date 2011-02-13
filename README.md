@@ -32,8 +32,8 @@ outputs an optimized copy to ``/static_dev/publish``.
 
 During development, ``/static`` is a symlink to ``/static_dev``, in order to 
 not having to rebuild for testing every change. Before publishing the project, 
-run the boilerplate build script and change the reference of ``/static`` from 
-``/static_dev`` to ``/static_dev/publish``
+run the html5-boilerplate build script and change the reference of ``/static`` 
+to ``/static_dev/publish``, to upload the optimized version:
 
     # go into html5-boilerplate's build directory    
     $ cd static_dev/build 
