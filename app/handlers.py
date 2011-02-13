@@ -20,9 +20,10 @@ class LogIn(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         action = self.request.get('action')
+        target_url = self.request.get('continue')
         if action and action == "verify":
             f = self.request.get('openid_identifier')
-            url = users.create_login_url(federated_identity=f)
+            url = users.create_login_url(target_url, federated_identity=f)
             self.redirect(url)
         else:
             html = env.get_template('login.html').render()
@@ -38,6 +39,13 @@ class LogOut(webapp.RequestHandler):
 
 # Custom sites
 class Main(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        html = env.get_template('index.html').render({'user': user})
+        self.response.out.write(html)
+
+
+class Account(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         html = env.get_template('index.html').render({'user': user})

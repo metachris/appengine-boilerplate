@@ -10,7 +10,10 @@ from handlers import *
 urls = [
     (r'/', Main),
     (r'/login', LogIn),
-    (r'/lognout', LogOut),
+    (r'/_ah/login', LogIn),
+    (r'/_ah/login_required', LogIn),
+    (r'/logout', LogOut),
+    (r'/account', Account),
     #(r'/item/([-\w]+)', Item),
 ]
 

@@ -1,4 +1,4 @@
-application: your-app-name-here
+application: test-221
 version: 1 
 runtime: python
 api_version: 1
@@ -9,19 +9,21 @@ builtins:
 - datastore_admin: on
 
 handlers:
-- url: /_ah/login_required
-  script: do_openid_login.py
-
+# Cron jobs and other secured things
 - url: /services.*
   script: services.py
   login: admin
 
-- url: /membersonly.*
+# If authenticated user, AE will ask for login and redirect 
+- url: /account
   script: app.py
   login: required
 
-# html-5 boilerplate compatible handlers for redirects to /static/: 
+# Handler for login for restricted area 
+- url: /_ah/login_required
+  script: app.py
 
+# html-5 boilerplate redirects to /static/... 
 - url: /apple-touch-icon\.png
   mime_type: image/png
   static_files: static/apple-touch-icon.png
@@ -60,6 +62,5 @@ handlers:
   upload: static/(.*\.html)
     
 # All other requests go to the main app
-
 - url: /.*
   script: app.py
