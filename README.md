@@ -4,7 +4,12 @@ AppEngine boilerplate with several out of the box goodies:
 * [Jinja2 templating engine](https://github.com/mitsuhiko/jinja2)
 * OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
 
-You can see a it in action [here](http://ae-boilerplate.appspot.com).
+You can see the boilerplate live **[here](http://ae-boilerplate.appspot.com)**.
+
+This project is freely available under the [BSD license] [1], all code included is also
+covered by the BSD. You can do with it whatever you want!
+
+   [1]: http://www.opensource.org/licenses/bsd-license.php
 
 Jinja2 Templating Engine
 ------------------------
@@ -58,9 +63,7 @@ interface with the [openid-selector] [1] jQuery plugin (also used by [stackoverf
 
 ![Alt text](http://lh4.ggpht.com/_IfEh7XYTTeE/STA1yGHn79I/AAAAAAAAADc/IXKrRpick4w/step1.png)
 
-What is not provided are private areas defined in app.yaml, which will ask
-unauthenticated users to login and redirect them. See the following resources
-for more infos:
+More infos about appengine and openid:
 
 * [http://code.google.com/appengine/articles/openid.html](http://code.google.com/appengine/articles/openid.html)
 * [http://blog.notdot.net/2010/05/Using-OpenID-authentication-on-App-Engine](http://code.google.com/appengine/articles/openid.html)
