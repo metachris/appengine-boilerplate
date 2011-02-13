@@ -7,3 +7,6 @@ To update jinja2, replace /jinja2 with the newer version. For html5-boilerplate
 simply check out the new version into /static/ and update /templates/base.html 
 with the new index.html (the only adjustment is adding the blocks header, main
 and footer in the respective divs).
+
+The only modification to the standard html5-boilerplate is adding three blocks 
+to index.html: {% block header|main|footer %}
