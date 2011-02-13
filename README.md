@@ -14,9 +14,11 @@ covered by the BSD. You can do with it whatever you want!
 Jinja2 Templating Engine
 ------------------------
 Alternative templating engine with similar syntax to AppEngine and Django
-templates. ``{% cycle %}`` which is broken with AppEngine's templating works.
+templates. ``{% cycle %}`` works with Jinja (which is broken with AppEngine's 
+templating). To update jinja2, replace ``/jinja2`` with the newer version. 
 
-To update jinja2, replace ``/jinja2`` with the newer version. 
+If you don't want to use Jinja2 simply remove the ``/jinja2`` directory and
+update ``handlers.py`` to use AppEngine's templates. 
 
 HTML5-Boilerplate
 -----------------

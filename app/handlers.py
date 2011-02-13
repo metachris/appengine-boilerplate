@@ -32,7 +32,6 @@ class LogIn(webapp.RequestHandler):
 
 class LogOut(webapp.RequestHandler):
     def get(self):
-        user = users.get_current_user()
         url = users.create_logout_url("/")
         self.redirect(url)
 
