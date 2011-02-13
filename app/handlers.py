@@ -15,14 +15,18 @@ template_dirs.append(os.path.join(os.path.dirname(__file__), 'templates'))
 env = Environment(loader=FileSystemLoader(template_dirs))
 
 
-# Google sites
+# OpenID Login
 class LogIn(webapp.RequestHandler):
     def get(self):
-        html = env.get_template('login.html').render()
-        self.response.out.write(html)
-        #user = users.get_current_user()
-        #url = users.create_login_url("/")
-        #self.redirect(url)
+        user = users.get_current_user()
+        action = self.request.get('action')
+        if action and action == "verify":
+            f = self.request.get('openid_identifier')
+            url = users.create_login_url(federated_identity=f)
+            self.redirect(url)
+        else:
+            html = env.get_template('login.html').render()
+            self.response.out.write(html)
 
 
 class LogOut(webapp.RequestHandler):
