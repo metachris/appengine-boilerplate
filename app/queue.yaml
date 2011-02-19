@@ -1,7 +1,7 @@
 # Task queue configuration
 # http://code.google.com/appengine/docs/python/config/queue.html
 #
-#queue:
+queue:
 #- name: fooqueue
 #  rate: 1/s
 #  bucked_size:40

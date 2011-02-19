@@ -1,6 +1,6 @@
 {% extends "_html5.html" %}
 
-{#
+{% comment %}
   Template inheritance: _html5.html > base.html > all_other_templates
   
   This abstraction is used to need only minimal modifications to the 
@@ -8,7 +8,7 @@
   footer).
     
   Define all site-specific templates in here, all templates extend 'base.html'.
-#}
+{% endcomment %}
 
 {% block header %}
     Add common header here in base.html

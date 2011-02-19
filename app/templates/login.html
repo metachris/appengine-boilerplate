@@ -13,6 +13,7 @@
 	<!-- Simple OpenID Selector --> 
 	<form action="/login" method="get" id="openid_form"> 
 		<input type="hidden" name="action" value="verify" /> 
+		{% if continue_to %}<input type="hidden" name="continue" value="{{ continue_to }}" />{% endif %}		
 		<fieldset> 
 			<legend>Sign-in or Create New Account</legend> 
 			<div id="openid_choice"> 

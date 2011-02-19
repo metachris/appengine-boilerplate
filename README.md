@@ -1,7 +1,6 @@
 AppEngine boilerplate with several out of the box goodies:
 
 * [html5-boilerplate](https://github.com/paulirish/html5-boilerplate)
-* [Jinja2 templating engine](https://github.com/mitsuhiko/jinja2)
 * OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
 
 You can see the boilerplate live **[here](http://ae-boilerplate.appspot.com)**.
@@ -28,14 +27,6 @@ More infos about appengine and openid:
    [1]: http://code.google.com/p/openid-selector/
    [2]: http://stackoverflow.com/users/login
 
-Jinja2 Templating Engine
-------------------------
-Alternative templating engine with similar syntax to AppEngine and Django
-templates. ``{% cycle %}`` works with Jinja (which is broken with AppEngine's 
-templating). To update jinja2, replace ``/jinja2`` with the newer version. 
-
-If you don't want to use Jinja2 simply remove the ``/jinja2`` directory and
-update ``handlers.py`` to use AppEngine's templates. 
 
 HTML5-Boilerplate
 -----------------

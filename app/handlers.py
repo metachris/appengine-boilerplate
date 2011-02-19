@@ -5,14 +5,17 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-from jinja2 import Environment, FileSystemLoader, TemplateNotFound
+#from jinja2 import Environment, FileSystemLoader, TemplateNotFound
+from google.appengine.ext.webapp import template
 
 from models import *
 
 # Setup jinja templating
-template_dirs = []
-template_dirs.append(os.path.join(os.path.dirname(__file__), 'templates'))
-env = Environment(loader=FileSystemLoader(template_dirs))
+#template_dirs = []
+#template_dirs.append(os.path.join(os.path.dirname(__file__), 'templates'))
+#env = Environment(loader=FileSystemLoader(template_dirs))
+
+tdir = os.path.join(os.path.dirname(__file__), 'templates/')
 
 
 # OpenID Login
@@ -26,8 +29,8 @@ class LogIn(webapp.RequestHandler):
             url = users.create_login_url(target_url, federated_identity=f)
             self.redirect(url)
         else:
-            html = env.get_template('login.html').render()
-            self.response.out.write(html)
+            self.response.out.write(template.render(tdir + "login.html", \
+                    {"continue_to": target_url}))
 
 
 class LogOut(webapp.RequestHandler):
@@ -40,12 +43,12 @@ class LogOut(webapp.RequestHandler):
 class Main(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        html = env.get_template('index.html').render({'user': user})
-        self.response.out.write(html)
+        self.response.out.write(template.render(tdir + "index.html", \
+                {"user": user}))
 
 
 class Account(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        html = env.get_template('index.html').render({'user': user})
-        self.response.out.write(html)
+        self.response.out.write(template.render(tdir + "index.html", \
+                {"user": user}))
