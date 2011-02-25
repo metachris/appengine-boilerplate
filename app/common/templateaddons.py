@@ -22,4 +22,4 @@ def getItem(l, id):
     if type(l) == dict and id in l:
         return l[id]
 
-register.filter(half)
+register.filter(getItem)
