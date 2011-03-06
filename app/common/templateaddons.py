@@ -23,4 +23,13 @@ def getItem(l, id):
     if type(l) == dict and id in l:
         return l[id]
 
+
+def truncate_chars(value, maxlen):
+    if len(value) < maxlen:
+        return value
+    else:
+        return value[:maxlen - 3] + '...'
+
+
 register.filter(getItem)
+register.filter(truncate_chars)
