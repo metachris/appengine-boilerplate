@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
-{% block head %}
-	<link type="text/css" rel="stylesheet" href="/css/openid.css" /> 
-{% endblock %}
-
 {% block scripts %}
-	<script type="text/javascript" src="/js/libs/openid-en.js"></script> 
+	<script> 
+        $(document).ready(function() {
+        	openid.init('openid_identifier');
+        });
+	</script>
 {% endblock %}
 
 {% block main %}
-
 	<!-- Simple OpenID Selector --> 
 	<form action="/login" method="get" id="openid_form"> 
 		<input type="hidden" name="action" value="verify" /> 

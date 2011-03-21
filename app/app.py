@@ -19,7 +19,6 @@ urls = [
     (r'/_ah/login_required', LogIn),
     (r'/logout', LogOut),
     (r'/account', Account),
-    #(r'/item/([-\w]+)', Item),
 ]
 
 application = webapp.WSGIApplication(urls, debug=True)
