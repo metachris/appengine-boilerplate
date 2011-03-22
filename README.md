@@ -41,13 +41,22 @@ outputs an optimized copy to ``/static_dev/publish``.
 During development, ``/static`` is a symlink to ``/static_dev``, in order to 
 not having to rebuild for testing every change. Before publishing the project, 
 run the html5-boilerplate build script and change the reference of ``/static`` 
-to ``/static_dev/publish``, to upload the optimized version:
+to ``/static_dev/publish``, to upload the optimized version. The ``upload_to_appengine.sh``
+script does that automatically for you:
+
+- Asks if it should run the build process with ``ant minify``
+- Changes the /static symlink to the production version
+- Waits for you to test and confirm
+- Uploads the app to appengine
+- Reverts /static to the development environment
+
+This would be the manual steps:
 
     # go into html5-boilerplate's build directory    
     $ cd static_dev/build 
     
     # run ant, which compiles an optimized version into static_dev/publish
-    $ ant
+    $ ant minidy
     
     # go back into the main directory
     $ cd ../../
