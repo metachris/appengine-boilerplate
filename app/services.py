@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
+from google.appengine.dist import use_library
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+use_library('django', '1.2')
 
 """
 Services that are accessible to admin only (eg. cron).

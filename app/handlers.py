@@ -6,15 +6,10 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-#from jinja2 import Environment, FileSystemLoader, TemplateNotFound
 from google.appengine.ext.webapp import template
 
 from models import *
 
-# Setup jinja templating
-#template_dirs = []
-#template_dirs.append(os.path.join(os.path.dirname(__file__), 'templates'))
-#env = Environment(loader=FileSystemLoader(template_dirs))
 
 tdir = os.path.join(os.path.dirname(__file__), 'templates/')
 
@@ -42,14 +37,20 @@ class LogOut(webapp.RequestHandler):
 
 # Custom sites
 class Main(webapp.RequestHandler):
+    def head(self, screen_name=None):
+        """Head is used by Twitter, else the tweet button shows 0"""
+        return
+
     def get(self):
         user = users.get_current_user()
+        prefs = InternalUser.from_user(user)
         self.response.out.write(template.render(tdir + "index.html", \
-                {"user": user}))
+                {"prefs": prefs}))
 
 
 class Account(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        prefs = InternalUser.from_user(user)
         self.response.out.write(template.render(tdir + "index.html", \
-                {"user": user}))
+                {"prefs": prefs}))
