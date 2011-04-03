@@ -7,8 +7,10 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-from models import *
+# Import packages from the project
 import mc
+from models import *
+from tools import *
 
 
 tdir = os.path.join(os.path.dirname(__file__), '../templates/')
@@ -18,10 +20,10 @@ tdir = os.path.join(os.path.dirname(__file__), '../templates/')
 class LogIn(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        action = self.request.get('action')
-        target_url = self.request.get('continue')
+        action = decode(self.request.get('action'))
+        target_url = decode(self.request.get('continue'))
         if action and action == "verify":
-            f = self.request.get('openid_identifier')
+            f = decode(self.request.get('openid_identifier'))
             url = users.create_login_url(target_url, federated_identity=f)
             self.redirect(url)
         else:
@@ -44,6 +46,9 @@ class Main(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         prefs = UserPrefs.from_user(user)
+
+        param = decode(self.request.get('param'))
+
         self.response.out.write(template.render(tdir + "index.html", \
                 {"prefs": prefs}))
 
