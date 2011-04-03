@@ -2,6 +2,8 @@ AppEngine boilerplate with several out of the box goodies:
 
 * [html5-boilerplate](https://github.com/paulirish/html5-boilerplate)
 * OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
+* Memcache boilerplate
+* Template inheritance setup
 
 You can see the boilerplate live **[here](http://ae-boilerplate.appspot.com)**.
 
@@ -42,7 +44,8 @@ During development, ``/static`` is a symlink to ``/static_dev``, in order to
 not having to rebuild for testing every change. Before publishing the project, 
 run the html5-boilerplate build script and change the reference of ``/static`` 
 to ``/static_dev/publish``, to upload the optimized version. The ``upload_to_appengine.sh``
-script does that automatically for you:
+script does that automatically for you (edit the script and set ``CMD_APPCFG`` to your
+local installation before using):
 
 - Asks if it should run the build process with ``ant minify``
 - Changes the /static symlink to the production version
@@ -50,13 +53,17 @@ script does that automatically for you:
 - Uploads the app to appengine
 - Reverts /static to the development environment
 
+You just need to do this:
+
+  ./upload_to_appengine.sh
+
 This would be the manual steps:
 
     # go into html5-boilerplate's build directory    
     $ cd static_dev/build 
     
     # run ant, which compiles an optimized version into static_dev/publish
-    $ ant minidy
+    $ ant minify
     
     # go back into the main directory
     $ cd ../../

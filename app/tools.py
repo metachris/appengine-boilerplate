@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
 from os import environ
 
 
-def is_textenv():
+def is_testenv():
     """
     True if devserver, False if appengine server
 

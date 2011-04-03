@@ -1,9 +1,5 @@
+* OAuth login: Twitter, Facebook, LinkedIn, Dropbox, etc.
 * About page with feedback form
+* Feedback dialog
 
-
-Think about
------------
-
-* OAuth: Twitter, Facebook, LinkedIn, Dropbox, etc.
-* After logout return to same page? 
  

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Set the following variable to your local appcfg.py
+CMD_APPCFG="/home/chris/Tools/google_appengine/appcfg.py"
+
+# Cache current directory
 DIR=$( pwd )
 
 function static_revert {
@@ -26,7 +30,7 @@ function static_toprod {
 
 function upload {
   # Upload to appengine
-  ~/Tools/google_appengine/appcfg.py update app
+  $CMD_APPCFG update app
 }
 
 function build {
