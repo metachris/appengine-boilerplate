@@ -43,7 +43,7 @@ class Main(webapp.RequestHandler):
 
     def get(self):
         user = users.get_current_user()
-        prefs = InternalUser.from_user(user)
+        prefs = UserPrefs.from_user(user)
         self.response.out.write(template.render(tdir + "index.html", \
                 {"prefs": prefs}))
 
@@ -51,6 +51,6 @@ class Main(webapp.RequestHandler):
 class Account(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        prefs = InternalUser.from_user(user)
+        prefs = UserPrefs.from_user(user)
         self.response.out.write(template.render(tdir + "index.html", \
                 {"prefs": prefs}))

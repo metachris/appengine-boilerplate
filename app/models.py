@@ -7,7 +7,7 @@ from google.appengine.ext import db
 from google.appengine.api import users
 
 
-class InternalUser(db.Model):
+class UserPrefs(db.Model):
     nickname = db.StringProperty()
     email = db.StringProperty(default="")
     email_md5 = db.StringProperty(default="")  # used for gravatar
@@ -35,34 +35,51 @@ class InternalUser(db.Model):
             return None
 
         if not user.federated_identity():
+            # Only happens on local devserver
             logging.warning("_ user has no fed id [%s]" % user)
 
         if user.federated_identity():
-            q = db.GqlQuery("SELECT * FROM InternalUser WHERE \
+            q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 federated_identity = :1 AND federated_provider = :2", \
                 user.federated_identity(), user.federated_provider())
         else:
-            q = db.GqlQuery("SELECT * FROM InternalUser WHERE \
+            # Only on the local devserver
+            q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 google_user_id = :1", user.user_id())
 
         prefs = q.get()
-
         if not prefs:
             # create regular new userpref object now
             nick = user.nickname()
             if user.email():
                 if not nick or "http://" in nick:
+                    # If user has email and openid-url is nickname, replace
                     nick = user.email()
 
+            # Save the md5 for gravatar
             m = md5(user.email().strip().lower()).hexdigest()
 
-            logging.info("_ create new internaluser")
-            fed_id = user.federated_identity()
-            fed_prov = user.federated_provider()
-            prefs = InternalUser(federated_identity=fed_id,\
-                federated_provider=fed_prov, nickname=nick, \
-                email=user.email(), email_md5=m)
-            prefs.google_user_id = user.user_id()
+            # Create new user preference entity
+            logging.info("_ create new userprefs: %s" % nick)
+            prefs = UserPrefs(nickname=nick, \
+                    email=user.email(), \
+                    email_md5=m, \
+                    federated_identity=user.federated_identity(), \
+                    federated_provider=user.federated_provider(), \
+                    google_user_id=user.user_id()
+                )
+
+            # Save it
             prefs.put()
 
+        # Return either found or newly created user preferences
         return prefs
+
+
+class YourCustomModel(db.Model):
+    userprefs = db.ReferenceProperty(UserPrefs)
+
+    demo_string_property = db.StringProperty()
+    demo_boolean_property = db.BooleanProperty(default=True)
+    demo_integer_property = db.IntegerProperty(default=1)
+    demo_datetime_property = db.DateTimeProperty(auto_now_add=True)
