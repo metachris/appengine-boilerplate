@@ -8,9 +8,10 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
 from models import *
+import mc
 
 
-tdir = os.path.join(os.path.dirname(__file__), 'templates/')
+tdir = os.path.join(os.path.dirname(__file__), '../templates/')
 
 
 # OpenID Login
