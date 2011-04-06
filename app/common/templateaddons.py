@@ -13,17 +13,6 @@ before rendering the template, include tags in the handler with
 register = webapp.template.create_template_register()
 
 
-def getItem(l, id):
-    """
-    use template-tag with {{ my_tuple|getItem:0 }}
-    workaround because appengine templates can't do {% for x,y in sometuple %}
-    """
-    if type(l) == list and len(l) > id:
-        return l[id]
-    if type(l) == dict and id in l:
-        return l[id]
-
-
 def truncate_chars(value, maxlen):
     if len(value) < maxlen:
         return value
@@ -31,5 +20,4 @@ def truncate_chars(value, maxlen):
         return value[:maxlen - 3] + '...'
 
 
-register.filter(getItem)
 register.filter(truncate_chars)
