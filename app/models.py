@@ -34,16 +34,14 @@ class UserPrefs(db.Model):
         if not user:
             return None
 
-        if not user.federated_identity():
-            # Only happens on local devserver
-            logging.warning("_ user has no fed id [%s]" % user)
-
         if user.federated_identity():
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 federated_identity = :1 AND federated_provider = :2", \
                 user.federated_identity(), user.federated_provider())
+
         else:
-            # Only on the local devserver
+            # Only happens on local devserver
+            logging.warning("_ user has no fed id [%s]" % user)
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 google_user_id = :1", user.user_id())
 
