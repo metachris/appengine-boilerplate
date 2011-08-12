@@ -1,15 +1,18 @@
 
 App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine projects.
 
-* **[html5-boilerplate 2.0](https://github.com/paulirish/html5-boilerplate)**
-(including it's automated js+css minification build script)
-* OpenID login with **[openid-selector](http://code.google.com/p/openid-selector/)**
-* **Memcaching** requests and responses
-* Flexible **user-preferences** model
-* **Templates** and template addons
-* **Tools** such as `is_testenv()` and `slugify(url)`
+* [html5-boilerplate 2.0](https://github.com/paulirish/html5-boilerplate)
+(including it's automated build toolchain for minification and concatenation of js+css)
+* Beautiful OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
+* Memcaching setup for requests and responses
+* Flexible user-preferences model (with Gravatar link)
+* Templates and template addons
+* Tools such as `is_testenv()` and `slugify(url)`
+* `app.yaml` configuration for admin areas, static files
+* Released under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)
 
-Take a look at the (rather minimalistic) **[live appengine-boilerplate](http://ae-boilerplate.appspot.com)**. This project and all it's components are released under the [BSD license](http://www.opensource.org/licenses/bsd-license.php). Do with it whatever you want!
+This project does not contain a lot of code. To get the best understanding of it's features 
+we recommend to simply **browse through the files**! You can see a rather minimalistic live version [here](http://ae-boilerplate.appspot.com).
 
 
 OpenID Authentication
@@ -26,6 +29,17 @@ More infos about appengine and openid:
     
    [1]: http://code.google.com/p/openid-selector/
    [2]: http://stackoverflow.com/users/login
+
+
+Memcaching
+----------
+
+Returning cached data usually improves the performance of a website. App Engine provides 
+a custom  version of memcache to store various data types, which can be used to efficiently 
+cache the results of datastore queries, or commonly used elements on the homepage.
+
+[`app/mc/cache.py`](https://github.com/metachris/appengine-boilerplate/blob/master/app/mc/cache.py) contains an exemplary method of querying data from
+memcache with a datastore fallback if not yet cached. Simply adapt as you need it!
 
 
 HTML5-Boilerplate
