@@ -1,8 +1,4 @@
-/**
- * Created with html5-boilerplate build script.
- *
- * Leave it empty!
- * 
- * Editing it causes the build script to append
- * it twice to the output css files.
-*/
+@import url("normalize.css");
+@import url("libs/openid.css");
+@import url("custom.css");
+

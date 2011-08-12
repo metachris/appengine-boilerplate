@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 
 {% block main %}
-<div style="">
-    <ul>
-        <li>OpenID authentication</li>
-        <li>HTML5 boilerplate</li>
-        <li>Memcache boilerplate</li>
-    </ul>
-    <br>
-    <p>{% if prefs %}welcome {{ prefs.nickname }}. <a href='/logout'>Log out</a>{% else %}<a href='/login'>Sign in</a>{% endif %}</p>
-    <br>
-    <a href="https://github.com/metachris/appengine-boilerplate">on github</a>
-    
-</div>
+<big>
+    Boilerplate, tools and best practices for app engine projects!
+</big>
+
+<br><br>
+
+<ul>
+    <li>HTML5 boilerplate 2.0</li>
+    <li>OpenID authentication</li>
+    <li>Memcache boilerplate</li>
+    <li>Versatile user preferences</li>
+    <li>much more</li>
+</ul>
+
+<br>
+
+<big>
+    {% if prefs %}welcome {{ prefs.nickname }} <br><br> <a href='/logout'>Log out</a>{% else %}<a href='/login'>Sign in with OpenID</a>{% endif %}
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="https://github.com/metachris/appengine-boilerplate">Visit on Github</a>
+</big>
 {% endblock %}
