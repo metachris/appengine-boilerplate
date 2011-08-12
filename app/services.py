@@ -21,10 +21,10 @@ class Cron1(webapp.RequestHandler):
     def get(self):
         """Cron job that queries the db and forks a worker for each entry"""
         emails = db.GqlQuery("SELECT * FROM emails WHERE 1")
+
+        # Start worker requests in the background
         for email in emails:
-            # Fork worker requests in the background
             taskqueue.add(url='/services/cron1-worker1/%s' % email.key())
-            # print prefs, prefs.key(), "dispatched"
 
 
 class Cron1_Worker1(webapp.RequestHandler):
@@ -48,7 +48,7 @@ class Cron1_Worker1(webapp.RequestHandler):
         message.send()
 
         # Now the message was sent and we can safely delete it.
-        message.delete()
+        email.delete()
 
 
 urls = [
