@@ -24,9 +24,6 @@ class UserPrefs(db.Model):
 
     email = db.StringProperty(required=True)
 
-    date_joined = db.DateTimeProperty(auto_now_add=True)
-    date_lastlogin = db.DateTimeProperty(auto_now_add=True)
-
     boolean_property = db.BooleanProperty(default=True)
 
     @staticmethod
