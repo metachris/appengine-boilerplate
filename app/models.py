@@ -8,23 +8,28 @@ from google.appengine.api import users
 
 
 class UserPrefs(db.Model):
+    """UserPrefs stores properties related to a specific user.
+
+    All models with user relations should refer to the specific UserPrefs
+    model, not the Google internal user model.
+    """
     nickname = db.StringProperty()
     email = db.StringProperty(default="")
-    email_md5 = db.StringProperty(default="")  # used for gravatar
 
+    # The md5 has of the email is used for gravatar image urls
+    email_md5 = db.StringProperty(default="")
+
+    # The main reference to the Google-internal user object
     federated_identity = db.StringProperty()
     federated_provider = db.StringProperty()
 
-    # google user id is only used on the dev server
+    # Google user id is only used on the dev server
     google_user_id = db.StringProperty()
 
+    # Various meta information
     date_joined = db.DateTimeProperty(auto_now_add=True)
     date_lastlogin = db.DateTimeProperty(auto_now_add=True)  # TODO
-    date_lastactivity = db.DateTimeProperty(auto_now_add=True)
-
-    email = db.StringProperty(required=True)
-
-    boolean_property = db.BooleanProperty(default=True)
+    date_lastactivity = db.DateTimeProperty(auto_now_add=True)  # TODO
 
     @staticmethod
     def from_user(user):
@@ -32,42 +37,41 @@ class UserPrefs(db.Model):
             return None
 
         if user.federated_identity():
+            # Standard OpenID user object
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 federated_identity = :1 AND federated_provider = :2", \
                 user.federated_identity(), user.federated_provider())
 
         else:
-            # Only happens on local devserver
+            # On local devserver there is only the google user object
             logging.warning("_ user has no fed id [%s]" % user)
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 google_user_id = :1", user.user_id())
 
+        # Try to get the UserPrefs from the data store
         prefs = q.get()
+
+        # If not existing, create now
         if not prefs:
-            # create regular new userpref object now
             nick = user.nickname()
             if user.email():
                 if not nick or "http://" in nick:
                     # If user has email and openid-url is nickname, replace
                     nick = user.email()
 
-            # Save the md5 for gravatar
-            m = md5(user.email().strip().lower()).hexdigest()
-
             # Create new user preference entity
             logging.info("_ create new userprefs: %s" % nick)
-            prefs = UserPrefs(nickname=nick, \
-                    email=user.email(), \
-                    email_md5=m, \
-                    federated_identity=user.federated_identity(), \
-                    federated_provider=user.federated_provider(), \
-                    google_user_id=user.user_id()
-                )
+            prefs = UserPrefs(nickname=nick,
+                    email=user.email(),
+                    email_md5=md5(user.email().strip().lower()).hexdigest(),
+                    federated_identity=user.federated_identity(),
+                    federated_provider=user.federated_provider(),
+                    google_user_id=user.user_id())
 
-            # Save it
+            # Save the newly created UserPrefs
             prefs.put()
 
-        # Return either found or newly created user preferences
+        # Return either found or just created user preferences
         return prefs
 
 
