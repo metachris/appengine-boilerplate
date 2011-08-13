@@ -31,6 +31,12 @@ class UserPrefs(db.Model):
     date_lastlogin = db.DateTimeProperty(auto_now_add=True)  # TODO
     date_lastactivity = db.DateTimeProperty(auto_now_add=True)  # TODO
 
+    # is_setup: set to true after setting username and email at first login
+    is_setup = db.BooleanProperty(default=False)
+
+    # User defined
+    subscribed_to_newsletter = db.BooleanProperty(default=False)
+
     @staticmethod
     def from_user(user):
         if not user:
@@ -54,7 +60,7 @@ class UserPrefs(db.Model):
         if not prefs:
             nick = user.nickname()
             if user.email():
-                if not nick or "http://" in nick:
+                if not nick or "http://" in nick or "https://" in nick:
                     # If user has email and openid-url is nickname, replace
                     nick = user.email()
 

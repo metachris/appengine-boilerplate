@@ -116,7 +116,9 @@ Ideas
 
 Some ideas for future improvements:
 
+* Update openid-selector
 * Signing up: ask for username, newsletter, subscribe to mailchimp
 * OAuth login: Twitter, Facebook, LinkedIn, Dropbox, etc.
 * About page with feedback form
 * Feedback dialog
+* akismet, twitter, bit.ly modules?
