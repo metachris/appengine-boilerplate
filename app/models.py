@@ -8,10 +8,10 @@ from google.appengine.api import users
 
 
 class UserPrefs(db.Model):
-    """UserPrefs stores properties related to a specific user.
+    """Holds custom properties related to a user.
 
-    All models with user relations should refer to the specific UserPrefs
-    model, not the Google internal user model.
+    All models with user relations should reference the specific UserPrefs
+    model instead of the Google internal user model due to a known bug.
     """
     nickname = db.StringProperty()
     email = db.StringProperty(default="")
@@ -39,8 +39,7 @@ class UserPrefs(db.Model):
         if user.federated_identity():
             # Standard OpenID user object
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
-                federated_identity = :1 AND federated_provider = :2", \
-                user.federated_identity(), user.federated_provider())
+                federated_identity = :1, user.federated_identity()")
 
         else:
             # On local devserver there is only the google user object
