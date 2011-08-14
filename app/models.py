@@ -9,24 +9,24 @@ import mc
 
 
 class UserPrefs(db.Model):
-    """Holds custom properties related to a user, and provides caching for
-    fast access to the UserPrefs object.
+    """Storage for custom properties related to a user. Provides caching
+    for super-fast access to the UserPrefs object.
 
     All models with user relations should reference the specific UserPrefs
-    model instead of the Google internal user model due to a known bug.
+    model, never the GAE internal user model (due to a known GAE bug).
 
     The UserPrefs can be retrieved/created via from_user(user):
 
         userprefs = UserPrefs.from_user(users.get_current_user())
 
-    This retrieves the UserPrefs object is automatically from memcache, or from
-    the DB and put into memcache if not already cached. The cached object is
-    cleared whenever the .put() or .delete() method is called.
+    This retrieves the UserPrefs object is automatically from memcache or, if
+    not already cached, from the datastore and put into memcache. The cached
+    object is cleared whenever the .put() or .delete() method is called.
 
     If users.get_current_user() is not logged in, from_user() returns None.
 
-    Use the BaseRequestHandler (see main.py) to automatically provide the
-    current user's UserPref object via self.userprefs.
+    The BaseRequestHandler (see handlers/baserequesthandler.py and main.py)
+    automatically provides the current UserPref object via self.userprefs.
     """
     # Base settings. Copied over from OpenID at first login (may not be valid)
     nickname = db.StringProperty()
@@ -55,28 +55,6 @@ class UserPrefs(db.Model):
 
     # Cursom properties
     subscribed_to_newsletter = db.BooleanProperty(default=False)
-
-    def put(self):
-        """
-        Overrides db.Model.put() to remove the cached object after an update.
-        """
-        # Call the put() method of the db.Model and store the result
-        key = super(UserPrefs, self).put()
-
-        # Remove previously cached object. If put() is called after creating
-        # the object, there is no self._user.
-        if hasattr(self, "_user"):
-            mc.cache.get_userprefs(self._user, clear=True)
-
-        # Return key returned by db.Model.put()
-        return key
-
-    def delete(self):
-        """
-        Overrides db.Model.delete() to remove the object from memcache.
-        """
-        super(UserPrefs, self).delete()
-        mc.cache.get_userprefs(self._user, clear=True)
 
     @staticmethod
     def from_user(user):
@@ -130,6 +108,35 @@ class UserPrefs(db.Model):
 
         # Return either found or just created user preferences
         return prefs
+
+    def put(self):
+        """
+        Overrides db.Model.put() to remove the cached object after an update.
+        """
+        # Call the put() method of the db.Model and keep the result
+        key = super(UserPrefs, self).put()
+
+        # Remove previously cached object. If put() is called the first time
+        # (after creating the object) there would be no self._user.
+        if hasattr(self, "_user"):
+            self._clear_cache()
+
+        # Return key provided by db.Model.put()
+        return key
+
+    def delete(self):
+        """
+        Overrides db.Model.delete() to remove the object from memcache.
+        """
+        super(UserPrefs, self).delete()
+        self._clear_cache()
+
+    def _clear_cache(self):
+        """
+        Removes the object from memcache. Automatically called on .put()
+        and .delete().
+        """
+        mc.cache.get_userprefs(self._user, clear=True)
 
 
 class YourCustomModel(db.Model):
