@@ -5,8 +5,10 @@ from google.appengine.ext import webapp
 
 import models
 import tools.common
+import settings
 
-TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '../templates/')
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__),
+        '../%s' % settings.TEMPLATE_DIR)
 
 
 class BaseRequestHandler(webapp.RequestHandler):

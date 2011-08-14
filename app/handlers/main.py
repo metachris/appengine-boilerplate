@@ -12,6 +12,7 @@ import mc
 from models import *
 from baserequesthandler import *
 
+import tools.mailchimp
 from tools.common import decode
 from tools.decorators import login_required
 
@@ -88,24 +89,27 @@ class AccountSetup(BaseRequestHandler):
         email = decode(self.request.get("email"))
         subscribe = decode(self.request.get("subscribe"))
         target_url = decode(self.request.get('continue'))
-        if not target_url:
-            target_url = "/account"
+        target_url = target_url or "/account"
 
+        # Set a flag whether newsletter subscription setting has changed
+        subscription_changed = bool(self.userprefs.subscribed_to_newsletter) \
+                is not bool(subscribe)
+
+        # Update UserPrefs object
         self.userprefs.is_setup = True
         self.userprefs.nickname = username
         self.userprefs.email = email
         self.userprefs.email_md5 = md5(email.strip().lower()).hexdigest()
-        self.userprefs.subscribed_to_newsletter = True if subscribe else False
+        self.userprefs.subscribed_to_newsletter = bool(subscribe)
         self.userprefs.put()
 
-        logging.info("Updated UserPrefs")
+        # Subscribe this user to the email newsletter now (if wanted). By
+        # default does not subscribe users to mailchimp in Test Environment!
+        if subscription_changed and settings.MAILCHIMP_ENABLED:
+            if subscribe:
+                tools.mailchimp.mailchimp_subscribe(email)
+            else:
+                tools.mailchimp.mailchimp_unsubscribe(email)
 
-        # Subscribe this user to the email newsletter now (if wanted)
-        if subscribe:
-            self.subscribe_to_newsletter()
-
+        # After updating UserPrefs, redirect
         self.redirect(target_url)
-
-    def subscribe_to_newsletter(self):
-        # Use mailchimp api to add user to the list
-        pass
