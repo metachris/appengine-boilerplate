@@ -4,8 +4,10 @@ App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine 
 * [html5-boilerplate 2.0](https://github.com/paulirish/html5-boilerplate)
 (including it's automated build toolchain for minification and concatenation of js+css)
 * Beautiful OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
+* Flexible user-preferences model with auto-caching (plus Gravatar link)
+* `BaseRequestHandler` for simplified rendering and access to UserPrefs
+* `@login_required` decorator
 * Memcaching setup for requests and responses
-* Flexible user-preferences model (with Gravatar link)
 * Templates and template addons
 * Tools such as `is_testenv()` and `slugify(url)`
 * `app.yaml` configuration for admin areas, static files

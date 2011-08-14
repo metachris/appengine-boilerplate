@@ -16,7 +16,7 @@ from decorators import *
 
 
 # OpenID login
-class LogIn(webapp.RequestHandler):
+class LogIn(BaseRequestHandler):
     """Redirects a user to the OpenID login site. Will redirect after
     successful login if user is sent to /login?continue=/<target_url>.
     """
@@ -31,9 +31,8 @@ class LogIn(webapp.RequestHandler):
             url = users.create_login_url(target_url, federated_identity=fid)
             self.redirect(url)
         else:
-            self.response.out.write( \
-                    template.render(TEMPLATE_DIR + "login.html",
-                            {"continue_to": target_url}))
+            # BaseRequestHandler provides .render() for rendering a template
+            self.render("login.html", {"continue_to": target_url})
 
 
 # LogOut redirects the user to the GAE logout url, and then redirects to /
