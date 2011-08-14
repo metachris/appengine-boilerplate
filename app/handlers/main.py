@@ -2,6 +2,7 @@
 import os
 import logging
 
+from hashlib import md5
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -126,6 +127,7 @@ class AccountSetup(BaseRequestHandler):
         self.userprefs.is_setup = True
         self.userprefs.nickname = username
         self.userprefs.email = email
+        self.userprefs.email_md5 = md5(email.strip().lower()).hexdigest()
         self.userprefs.subscribed_to_newsletter = True if subscribe else False
         self.userprefs.put()
 

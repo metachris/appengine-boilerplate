@@ -2,7 +2,6 @@
 import logging
 
 from hashlib import md5
-
 from google.appengine.ext import db
 from google.appengine.api import users
 
@@ -63,8 +62,10 @@ class UserPrefs(db.Model):
         # Call the put() method of the db.Model and store the result
         key = super(UserPrefs, self).put()
 
-        # Remove previously cached object
-        mc.cache.get_userprefs(self._user, clear=True)
+        # Remove previously cached object. If put() is called after creating
+        # the object, there is no self._user.
+        if hasattr(self, "_user"):
+            mc.cache.get_userprefs(self._user, clear=True)
 
         # Return key returned by db.Model.put()
         return key

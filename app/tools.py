@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
 import logging
-from os import environ
 import unicodedata
+from os import environ
+
 
 def is_testenv():
     """
@@ -36,3 +37,4 @@ def slugify(value):
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
     value = unicode(_slugify_strip_re.sub('', value).strip().lower())
     return _slugify_hyphenate_re.sub('-', value)
+
