@@ -12,6 +12,7 @@ from google.appengine.ext.webapp import template
 import mc
 from models import *
 from tools import *
+from decorators import *
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '../templates/')
 
