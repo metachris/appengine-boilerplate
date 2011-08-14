@@ -7,6 +7,7 @@ from google.appengine.api import users
 
 import mc
 
+
 class UserPrefs(db.Model):
     """Holds custom properties related to a user, and provides caching for
     fast access to the UserPrefs object.
@@ -18,12 +19,12 @@ class UserPrefs(db.Model):
 
         userprefs = UserPrefs.from_user(users.get_current_user())
 
-    This retrieves the UserPrefs object is automatically from memcache, or from 
-    the DB and put into memcache if not already cached. The cached object is 
+    This retrieves the UserPrefs object is automatically from memcache, or from
+    the DB and put into memcache if not already cached. The cached object is
     cleared whenever the .put() or .delete() method is called.
-    
+
     If users.get_current_user() is not logged in, from_user() returns None.
-    
+
     Use the BaseRequestHandler (see main.py) to automatically provide the
     current user's UserPref object via self.userprefs.
     """
@@ -79,7 +80,7 @@ class UserPrefs(db.Model):
 
     @staticmethod
     def from_user(user):
-        """Returns the cached UserPrefs object. If not cached, get from DB and 
+        """Returns the cached UserPrefs object. If not cached, get from DB and
         put it into memcache."""
         if not user:
             return None
@@ -88,7 +89,7 @@ class UserPrefs(db.Model):
 
     @staticmethod
     def _from_user(user):
-        """Gets UserPrefs object from database. Used by 
+        """Gets UserPrefs object from database. Used by
         mc.cache.get_userprefs() if not cached."""
         if user.federated_identity():
             # Standard OpenID user object
@@ -123,7 +124,7 @@ class UserPrefs(db.Model):
             # Save the newly created UserPrefs
             prefs.put()
 
-        # Keep an internal reference to the Google user object (for 
+        # Keep an internal reference to the Google user object (for
         # clearing the cache).
         prefs._user = user
 

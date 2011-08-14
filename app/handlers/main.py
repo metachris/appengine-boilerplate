@@ -51,12 +51,13 @@ class BaseRequestHandler(webapp.RequestHandler):
 
 # OpenID login
 class LogIn(webapp.RequestHandler):
-    """Redirects a user to the OpenID login site. Will redirect after 
+    """Redirects a user to the OpenID login site. Will redirect after
     successful login if user is sent to /login?continue=/<target_url>.
     """
     def get(self):
         # Wrap target url in order to redirect new users to the account setup
-        target_url = "/account?continue=%s" % decode(self.request.get('continue'))
+        target_url = "/account?continue=%s" % \
+                decode(self.request.get('continue'))
 
         action = decode(self.request.get('action'))
         if action and action == "verify":
@@ -65,7 +66,7 @@ class LogIn(webapp.RequestHandler):
             self.redirect(url)
         else:
             self.response.out.write( \
-                    template.render(TEMPLATE_DIR + "login.html", 
+                    template.render(TEMPLATE_DIR + "login.html",
                             {"continue_to": target_url}))
 
 
@@ -95,10 +96,10 @@ class Account(BaseRequestHandler):
     Users not supplying ?continue=<url> will see the accounts.html page
     """
     def get(self):
-        target_url = decode(self.request.get('continue'))        
+        target_url = decode(self.request.get('continue'))
         if target_url and "?continue=" in target_url:
             # circumvents a bug in gae which prepends the url again
-            target_url = target_url[target_url.index("?continue=")+10:]
+            target_url = target_url[target_url.index("?continue=") + 10:]
 
         if not self.userprefs.is_setup:
             # Setting up the user's preferences
@@ -120,7 +121,7 @@ class AccountSetup(BaseRequestHandler):
         username = decode(self.request.get("username"))
         email = decode(self.request.get("email"))
         subscribe = decode(self.request.get("subscribe"))
-        target_url = decode(self.request.get('continue'))        
+        target_url = decode(self.request.get('continue'))
         if not target_url:
             target_url = "/account"
 
