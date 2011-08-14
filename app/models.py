@@ -6,18 +6,37 @@ from hashlib import md5
 from google.appengine.ext import db
 from google.appengine.api import users
 
+import mc
 
 class UserPrefs(db.Model):
-    """Holds custom properties related to a user.
+    """Holds custom properties related to a user, and provides caching for
+    fast access to the UserPrefs object.
 
     All models with user relations should reference the specific UserPrefs
     model instead of the Google internal user model due to a known bug.
+
+    The UserPrefs can be retrieved/created via from_user(user):
+
+        userprefs = UserPrefs.from_user(users.get_current_user())
+
+    This retrieves the UserPrefs object is automatically from memcache, or from 
+    the DB and put into memcache if not already cached. The cached object is 
+    cleared whenever the .put() or .delete() method is called.
+    
+    If users.get_current_user() is not logged in, from_user() returns None.
+    
+    Use the BaseRequestHandler (see main.py) to automatically provide the
+    current user's UserPref object via self.userprefs.
     """
+    # Base settings. Copied over from OpenID at first login (may not be valid)
     nickname = db.StringProperty()
     email = db.StringProperty(default="")
 
     # The md5 has of the email is used for gravatar image urls
     email_md5 = db.StringProperty(default="")
+
+    # email_verified is set after user clicked the link in verification mail
+    email_verified = db.BooleanProperty(default=False)
 
     # The main reference to the Google-internal user object
     federated_identity = db.StringProperty()
@@ -34,14 +53,42 @@ class UserPrefs(db.Model):
     # is_setup: set to true after setting username and email at first login
     is_setup = db.BooleanProperty(default=False)
 
-    # User defined
+    # Cursom properties
     subscribed_to_newsletter = db.BooleanProperty(default=False)
+
+    def put(self):
+        """
+        Overrides db.Model.put() to remove the cached object after an update.
+        """
+        # Call the put() method of the db.Model and store the result
+        key = super(UserPrefs, self).put()
+
+        # Remove previously cached object
+        mc.cache.get_userprefs(self._user, clear=True)
+
+        # Return key returned by db.Model.put()
+        return key
+
+    def delete(self):
+        """
+        Overrides db.Model.delete() to remove the object from memcache.
+        """
+        super(UserPrefs, self).delete()
+        mc.cache.get_userprefs(self._user, clear=True)
 
     @staticmethod
     def from_user(user):
+        """Returns the cached UserPrefs object. If not cached, get from DB and 
+        put it into memcache."""
         if not user:
             return None
 
+        return mc.cache.get_userprefs(user)
+
+    @staticmethod
+    def _from_user(user):
+        """Gets UserPrefs object from database. Used by 
+        mc.cache.get_userprefs() if not cached."""
         if user.federated_identity():
             # Standard OpenID user object
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
@@ -49,7 +96,6 @@ class UserPrefs(db.Model):
 
         else:
             # On local devserver there is only the google user object
-            logging.warning("_ user has no fed id [%s]" % user)
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
                 google_user_id = :1", user.user_id())
 
@@ -65,7 +111,7 @@ class UserPrefs(db.Model):
                     nick = user.email()
 
             # Create new user preference entity
-            logging.info("_ create new userprefs: %s" % nick)
+            logging.info("Creating new UserPrefs for %s" % nick)
             prefs = UserPrefs(nickname=nick,
                     email=user.email(),
                     email_md5=md5(user.email().strip().lower()).hexdigest(),
@@ -75,6 +121,10 @@ class UserPrefs(db.Model):
 
             # Save the newly created UserPrefs
             prefs.put()
+
+        # Keep an internal reference to the Google user object (for 
+        # clearing the cache).
+        prefs._user = user
 
         # Return either found or just created user preferences
         return prefs

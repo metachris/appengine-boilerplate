@@ -19,11 +19,11 @@ class BaseRequestHandler(webapp.RequestHandler):
     """Extension of the normal RequestHandler
 
     - self.userprefs provides the UserPrefs object of the current user.
-    - self.generate() provides a quick way to render templates with
+    - self.render() provides a quick way to render templates with
       common template variables already preset.
     """
     def __init__(self):
-        webapp.RequestHandler.__init__(self)
+        super(BaseRequestHandler, self).__init__()
         self.userprefs = UserPrefs.from_user(users.get_current_user())
 
     def render(self, template_name, template_values={}):
@@ -44,11 +44,11 @@ class BaseRequestHandler(webapp.RequestHandler):
                 template.render(fn, values, debug=is_testenv()))
 
     def head(self, *args):
-        """Head is used by Twitter, else the tweet button shows count 0"""
+        """Head is used by Twitter. If not there the tweet button shows 0"""
         pass
 
 
-# OpenID Login
+# OpenID login
 class LogIn(webapp.RequestHandler):
     """Redirects a user to the OpenID login site. Will redirect after 
     successful login if user is sent to /login?continue=/<target_url>.
@@ -120,12 +120,16 @@ class AccountSetup(BaseRequestHandler):
         email = decode(self.request.get("email"))
         subscribe = decode(self.request.get("subscribe"))
         target_url = decode(self.request.get('continue'))        
-        
+        if not target_url:
+            target_url = "/account"
+
         self.userprefs.is_setup = True
         self.userprefs.nickname = username
         self.userprefs.email = email
         self.userprefs.subscribed_to_newsletter = True if subscribe else False
         self.userprefs.put()
+
+        logging.info("Updated UserPrefs")
 
         # Subscribe this user to the email newsletter now (if wanted)
         if subscribe:

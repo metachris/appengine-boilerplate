@@ -18,7 +18,15 @@
 <br>
 
 <big>
-    {% if prefs %}welcome {{ prefs.nickname }} <br><br> <a href='/logout'>Log out</a>{% else %}<a href='/login'>Sign in with OpenID</a>{% endif %}
+    {% if prefs %}
+        welcome {{ prefs.nickname }} 
+        <br><br> 
+        <a href='/logout'>Log out</a> &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a href='/account'>Account</a>
+    {% else %}
+        <a href='/login'>Sign in with OpenID</a>
+    {% endif %}
+    
     &nbsp;&nbsp;&middot;&nbsp;&nbsp;
     <a href="https://github.com/metachris/appengine-boilerplate">Visit on Github</a>
 </big>

@@ -2,23 +2,20 @@
 import re
 import logging
 from os import environ
-
-_slugify_strip_re = re.compile(r'[^\w\s-]')
-_slugify_hyphenate_re = re.compile(r'[-\s]+')
-
+import unicodedata
 
 def is_testenv():
     """
     True if devserver, False if appengine server
 
-    Appengine uses  'Google App Engine/1.4.2',
-    Devserver  uses 'Development/1.0'
+    Appengine uses 'Google App Engine/<version>',
+    Devserver uses 'Development/<version>'
     """
     return environ.get('SERVER_SOFTWARE', '').startswith('Development')
 
 
 def decode(var):
-    """Decode form input"""
+    """Safely decode form input"""
     if not var:
         return var
     return unicode(var, 'utf-8') if isinstance(var, str) else unicode(var)
@@ -31,6 +28,9 @@ def slugify(value):
 
     From Django's "django/template/defaultfilters.py".
     """
+    _slugify_strip_re = re.compile(r'[^\w\s-]')
+    _slugify_hyphenate_re = re.compile(r'[-\s]+')
+    
     if not isinstance(value, unicode):
         value = unicode(value)
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
