@@ -9,21 +9,23 @@ from google.appengine.ext.webapp import template
 
 # Import packages from the project
 import mc
-from models import *
-from baserequesthandler import *
-
+import settings
 import tools.mailchimp
+
+from models import *
+from baserequesthandler import BaseRequestHandler
 from tools.common import decode
 from tools.decorators import login_required
 
 
 # OpenID login
 class LogIn(BaseRequestHandler):
-    """Redirects a user to the OpenID login site. Will redirect after
-    successful login if user is sent to /login?continue=/<target_url>.
+    """
+    Redirects a user to the OpenID login site. After successful login the user
+    redirected to the target_url (via /login?continue=/<target_url>).
     """
     def get(self):
-        # Wrap target url in order to redirect new users to the account setup
+        # Wrap target url to redirect new users to the account setup step
         target_url = "/account?continue=%s" % \
                 decode(self.request.get('continue'))
 
@@ -47,29 +49,25 @@ class LogOut(webapp.RequestHandler):
 # Main page request handler
 class Main(BaseRequestHandler):
     def get(self):
-        # UTF-8 decoding of a supplied parameter
-        param = decode(self.request.get('param'))
-
         # Render the template
         self.render("index.html")
 
 
 # Account page and after-login handler
 class Account(BaseRequestHandler):
-    """After logging in, the user gets sent to /account?continue=<target_url>
-    in order to finish setting up the account (email, username, newsletter). If
-    the user account is already setup then simply redirect to the target url.
-
-    Users not supplying ?continue=<url> will see the accounts.html page
+    """
+    The user's account and preferences. After the first login, the user is sent
+    to /account?continue=<target_url> in order to finish setting up the account
+    (email, username, newsletter).
     """
     def get(self):
         target_url = decode(self.request.get('continue'))
+        # Circumvent a bug in gae which prepends the url again
         if target_url and "?continue=" in target_url:
-            # circumvents a bug in gae which prepends the url again
             target_url = target_url[target_url.index("?continue=") + 10:]
 
         if not self.userprefs.is_setup:
-            # Setting up the user's preferences
+            # First log in of user. Finish setup before forwarding.
             self.render("account_setup.html", {"target_url": target_url})
             return
 

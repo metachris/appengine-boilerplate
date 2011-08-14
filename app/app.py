@@ -7,19 +7,17 @@ use_library('django', '1.2')
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-# Load database models
-from models import *
-
 # Load request handlers
-from handlers import *
+import handlers
 
+# Map url's to handlers
 urls = [
-    (r'/', Main),
-    (r'/login', LogIn),
-    (r'/_ah/login_required', LogIn),
-    (r'/logout', LogOut),
-    (r'/account', Account),
-    (r'/account/setup', AccountSetup),
+    (r'/', handlers.Main),
+    (r'/login', handlers.LogIn),
+    (r'/_ah/login_required', handlers.LogIn),
+    (r'/logout', handlers.LogOut),
+    (r'/account', handlers.Account),
+    (r'/account/setup', handlers.AccountSetup),
 ]
 
 application = webapp.WSGIApplication(urls, debug=True)

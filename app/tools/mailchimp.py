@@ -13,10 +13,7 @@ def mailchimp_subscribe(email, list_id=None, double_optin=True):
     Subscribes this email to your mailchimp newsletter. If list_id is not
     set it will default to settings.MAILCHIMP_LIST_ID.
     """
-    # Get a MailChimp API client instance
     ms = MailSnake(settings.MAILCHIMP_API_KEY)
-
-    # Subscribe to list
     list_id = list_id or settings.MAILCHIMP_LIST_ID
     res = ms.listSubscribe(id=list_id, email_address=email, \
             double_optin=double_optin)
@@ -30,10 +27,7 @@ def mailchimp_unsubscribe(email, list_id=None, delete_member=False,
     Unsubscribes this email from your mailchimp newsletter. If list_id is not
     set it will default to settings.MAILCHIMP_LIST_ID.
     """
-    # Get a MailChimp API client instance
     ms = MailSnake(settings.MAILCHIMP_API_KEY)
-
-    # Subscribe to list
     list_id = list_id or settings.MAILCHIMP_LIST_ID
     res = ms.listUnsubscribe(id=list_id, email_address=email,
             delete_member=delete_member, send_goodbye=send_goodbye,

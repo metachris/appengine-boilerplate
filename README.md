@@ -10,6 +10,7 @@ App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine 
 * Memcaching setup for requests and responses
 * Templates and template addons
 * Tools such as `is_testenv()` and `slugify(url)`
+* Automatically subscribe users to your MailChimp newsletter
 * `app.yaml` configuration for admin areas, static files
 * Released under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)
 
@@ -119,7 +120,6 @@ Ideas
 Some ideas for future improvements:
 
 * Update openid-selector
-* Signing up: ask for username, newsletter, subscribe to mailchimp
 * OAuth login: Twitter, Facebook, LinkedIn, Dropbox, etc.
 * About page with feedback form
 * Feedback dialog
