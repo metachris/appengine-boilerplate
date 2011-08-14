@@ -4,7 +4,7 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 
 import models
-import tools
+import tools.common
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '../templates/')
 
@@ -34,8 +34,8 @@ class BaseRequestHandler(webapp.RequestHandler):
 
         # Render template
         fn = os.path.join(TEMPLATE_DIR, template_name)
-        self.response.out.write( \
-                webapp.template.render(fn, values, debug=tools.is_testenv()))
+        self.response.out.write(webapp.template.render(fn, values,
+                debug=tools.common.is_testenv()))
 
     def head(self, *args):
         """Head is used by Twitter. If not there the tweet button shows 0"""

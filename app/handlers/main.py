@@ -11,8 +11,9 @@ from google.appengine.ext.webapp import template
 import mc
 from models import *
 from baserequesthandler import *
-from tools import *
-from decorators import *
+
+from tools.common import decode
+from tools.decorators import login_required
 
 
 # OpenID login
