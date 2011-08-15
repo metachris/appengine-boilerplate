@@ -1,33 +1,109 @@
 {% extends "base.html" %}
 
+{% block title %}App Engine Boilerplate - A rock-solid default template for App Engine{% endblock %}
+
 {% block main %}
-<big>
-    Boilerplate, tools and best practices for app engine projects!
-</big>
+    <a class="fork" href="https://github.com/metachris/appengine-boilerplate"> 
+        <img src="/img/forkme-badge.png" alt="Fork me on GitHub"> 
+    </a> 
 
-<br><br>
+    <p>App Engine Boilerplate is a fast, robust and future-proof base template to get your project off the ground quickly and right-footed. </p> 
 
-<ul>
-    <li>HTML5 boilerplate 2.0</li>
-    <li>OpenID authentication</li>
-    <li>Memcache boilerplate</li>
-    <li>Versatile user preferences</li>
-    <li>much more</li>
-</ul>
+    <h2>What does it include?</h2> 
+        <img src="/img/h5bp-logo.png" class="logo_right" />
+        <img src="/img/appengine-logo.png" class="logo_right" />
 
-<br>
-
-<big>
-    {% if prefs %}
-        welcome {{ prefs.nickname }} 
-        <br><br> 
-        <a href='/logout'>Log out</a> &nbsp;&nbsp;&middot;&nbsp;&nbsp;
-        <a href='/account'>Account</a>
-    {% else %}
-        <a href='/login'>Sign in with OpenID</a>
-    {% endif %}
+   <ul> 
+        <li><a href="https://github.com/paulirish/html5-boilerplate">HTML5 Boilerplate 2.0</a></li> 
+        <li>Build script to optimize images, js and css files</li> 
+        <li>OpenID authentication with a beautiful interface</li> 
+        <li>User preferences model with caching and Gravatar link</li> 
+        <li>Optimal caching and compression rules</li> 
+        <li>Best practice site configuration defaults</li>
+        <li>MailChimp integration, @login_required decorator</li>
+        <li>Minimal code, detailed comments</li> 
+    </ul> 
     
-    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
-    <a href="https://github.com/metachris/appengine-boilerplate">Visit on Github</a>
-</big>
+    {% if prefs %}<h2>Welcome, {{ prefs.nickname }}</h2>{% endif %}
+    
+    <div class="demo"> 
+        <a class="button" href="https://github.com/metachris/appengine-boilerplate">Visit on Github</a> 
+         &nbsp;
+         {% if prefs %}
+            <a class="button" href="/account">Account</a>
+            &nbsp;
+            <a class="button" href="/logout">Log Out</a>
+         {% else %}
+            <a class="button" href="/login?continue=/">Test the Login</a>
+         {% endif %}
+    </div> 
+
+    <h2>How to use it</h2> 
+    <p>App Engine Boilerplate only contains the things you need to get started. Take a look at the files, and feel encouraged to edit and customise every part on a per project basis.
+    </p><p>
+    The code is freely available under the BSD license so you can use it to build anything you want!
+    </p>            
+
+    <h2>Spread the word</h2>
+    <div class="share-bar"> 
+        <div class="share-opt"> 
+            <a class="twitter-share-button" 
+               href="http://twitter.com/share" 
+               data-count="vertical" 
+               data-text="Checking out appengine-boilerplate"
+               data-via="metachris" ></a> 
+        </div> 
+        
+        <div class="share-opt"> 
+            <g:plusone size="tall"></g:plusone> 
+        </div> 
+
+        <div class="share-opt"> 
+            <fb:like href="" send="false" layout="box_count" width="40" show_faces="false" font=""></fb:like> 
+            <div id="fb-root"></div> 
+        </div> 
+    </div> 
+    
+
+    <h2>Source code / First steps</h2> 
+    <p>Visit the <a href="https://github.com/metachris/appengine-boilerplate">GitHub repo</a> or download it in either <a href="https://github.com/metachris/appengine-boilerplate/zipball/master">zip</a> or <a href="https://github.com/metachris/appengine-boilerplate/tarball/master">tar</a> format. Here is a really quick guide on the first steps:</p> 
+    <pre># Clone the repository
+$ git clone git@github.com:metachris/appengine-boilerplate.git
+$ cd appengine-boilerplate
+
+# Start the app engine devserver
+$ &lt;GAE_DIR>/dev_appserver.py app
+
+# You can now visit the site via localhost:8080
+$ google-chrome http://localhost:8080
+
+# To build and preview the site before uploading
+$ ./upload_to_appengine.sh 
+Build the project with 'ant minify' now? [yN]y
+... lots of build output ...
+Setting /static to /static_dev/publish
+You can now test the latest build. Do you wish to upload this version? [yN]n
+Setting /static back to /static_dev</pre>
+ 
+<p><br><small>Tip: HTML5 Boilerplate is located in <tt>/static_dev</tt>.</small></p>
+ 
+ 
+    <h2>Feedback</h2>
+    <p>If you have ideas for changes to the project, join us on Github and file a ticket!</p>
+
+    <h2>Contributors</h2> 
+    <p><a href="http://twitter.com/metachris">Chris Hager</a> <small>★</small> <a href="https://github.com/foamdino">Kev Jackson</a> <small>★</small> <a href="https://github.com/raultorres88">raultorres88</a></p> 
+
+    
+    <div class="footer"> 
+        <p></p> 
+    </div> 
+
+    <script> 
+        (function(w,d){
+            Modernizr.load({load: '//connect.facebook.net/en_US/all.js#xfbml=1'});
+            Modernizr.load({load: '//platform.twitter.com/widgets.js'});
+            Modernizr.load({load: 'https://apis.google.com/js/plusone.js'});
+        }(this,document));
+    </script>  
 {% endblock %}

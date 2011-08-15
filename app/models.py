@@ -72,7 +72,7 @@ class UserPrefs(db.Model):
         if user.federated_identity():
             # Standard OpenID user object
             q = db.GqlQuery("SELECT * FROM UserPrefs WHERE \
-                federated_identity = :1, user.federated_identity()")
+                federated_identity = :1", user.federated_identity())
 
         else:
             # On local devserver there is only the google user object

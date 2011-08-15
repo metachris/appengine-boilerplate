@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1>Account</h1>
+<h2>Account</h2>
 
 
 <form action="/account/setup" method="post">
     <input type="hidden" name="continue" value="{{ target_url }}" />
+    <input type="hidden" name="subscribe" value="{% if prefs.subscribed_to_newsletter %}on{% endif %}" />
     <table border="0">
         <tr><td>Username:</td> <td><input type="text" name="username" value="{{ prefs.nickname }}" /></td></tr>
         <tr><td>Email:</td> <td><input type="text" name="email" value="{{ prefs.email }}" /></td></tr>
-        <tr><td><input type="checkbox" name="subscribe" id="subscribe" {% if prefs.subscribed_to_newsletter %}checked{% endif %} /></td> <td><label for="subscribe">Receive our newsletter</label></td></tr>
-        <tr><td></td><td><br><input type="submit" value="ok" /><br><small>Continue to {{ target_url }}</small></td></tr>
+        <tr><td></td><td><br><input type="submit" class="button" value="ok" />{% if target_url %}<br><small>Continue to {{ target_url }}</small>{% endif %}</td></tr>
     </table>
 </form>
 

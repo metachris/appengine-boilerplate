@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Set the following variable to your local appcfg.py
-CMD_APPCFG="/home/chris/Tools/google_appengine/appcfg.py"
+# Point CMD_APPCFG to your local appengine-sdk/appcfg.py
+CMD_APPCFG=""
 
 # Cache current directory
 DIR=$( pwd )
@@ -29,8 +29,12 @@ function static_toprod {
 }
 
 function upload {
-  # Upload to appengine
-  $CMD_APPCFG update app
+    # Upload to appengine
+    if [ $CMD_APPCFG ]; then
+        $CMD_APPCFG update app    
+    else
+        echo "Error: You need to edit upload_to_appengine.sh: point CMD_APPCFG to your local appengine's appcfg.py"
+    fi
 }
 
 function build {
@@ -40,7 +44,7 @@ function build {
 }
 
 read -p "Build the project with 'ant minify' now? [yN]" yn
-  case $yn in
+case $yn in
     [Yy]* ) build;;
     [Nn]* ) ;;
 esac
@@ -48,7 +52,7 @@ esac
 static_toprod
 
 read -p "You can now test the latest build. Do you wish to upload this version? [yN]" yn
-  case $yn in
+case $yn in
     [Yy]* ) upload;;
     [Nn]* ) ;;
 esac

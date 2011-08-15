@@ -5,9 +5,9 @@ App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine 
 (including it's automated build toolchain for minification and concatenation of js+css)
 * Beautiful OpenID login with [openid-selector](http://code.google.com/p/openid-selector/)
 * Flexible user-preferences model with auto-caching (plus Gravatar link)
-* `BaseRequestHandler` for simplified rendering and access to UserPrefs
+* `BaseRequestHandler` for simplified rendering and access to user preferences
 * `@login_required` decorator
-* Memcaching setup for requests and responses
+* Memcaching setup
 * Templates and template addons
 * Tools such as `is_testenv()` and `slugify(url)`
 * Automatically subscribe users to your MailChimp newsletter
@@ -15,7 +15,7 @@ App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine 
 * Released under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)
 
 This project does not contain a lot of code. To get the best understanding of it's features 
-we recommend to simply **browse through the files**! You can see a rather minimalistic live version [here](http://ae-boilerplate.appspot.com).
+we recommend to simply **browse through the files**! You can see a rather minimalistic live version [here](http://www.appengine-boilerplate.com).
 
 
 OpenID Authentication
@@ -111,7 +111,7 @@ references to your custom stylesheets from there, never from within index.html.
 Enjoy
 ----------
 
-Feedback, improvements and critique are greatly appreciated. You can reach the author via [@metachris](http://www.twitter.com/metachris). **Fork away!**
+Feedback, improvements and critique are greatly appreciated. **Fork away!**
 
 
 Ideas
@@ -119,6 +119,8 @@ Ideas
 
 Some ideas for future improvements:
 
+* Check for unique username
+* Email verification
 * Update openid-selector
 * OAuth login: Twitter, Facebook, LinkedIn, Dropbox, etc.
 * About page with feedback form
