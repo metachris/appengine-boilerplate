@@ -111,12 +111,12 @@ img.logo_right {
 .button {
     display: inline-block; 
     padding: 6px 15px; 
-    border: 1px solid #487310;
+    border: 1px solid #155c8e;
     margin: 20px 0 0; 
     font-size: 1.375em;
     line-height: 1.273;
     color: #fff; 
-    background: #6EAD1A; 
+    background: #2989c9; 
     text-shadow:0 1px 1px rgba(0,0,0,0.4); 
     -moz-border-radius: 5px; 
          border-radius: 5px;
@@ -146,7 +146,7 @@ img.logo_right {
 .button:active {
     text-decoration: none; 
     color: #fff; 
-    background: #569107;
+    background: #1973b3;
 }
 .button:visited {
     color: #fff;
