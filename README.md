@@ -1,4 +1,3 @@
-
 App Engine Boilerplate is a versatile yet minimalistic setup for new App Engine projects.
 
 * [html5-boilerplate 2.0](https://github.com/paulirish/html5-boilerplate)
@@ -106,6 +105,20 @@ CSS files are no longer imported from `index.html` but exclusively through using
 html5 boilerplate automatically includes, minifies and concatenates css files
 which are imported via an `@import` statement from within `style.css`. Add
 references to your custom stylesheets from there, never from within index.html.
+
+
+Working in Windows
+-------------------
+There are a couple of posix symlinks within the project that will need to be updated to work with Windows.
+
+* "/static" which points to "/static_dev" during development
+* "/templates/base.html" which points to "/static/index.html"
+
+To create the new links, delete the existing links and use the mklink command from an command prompt run with Administration privileges.
+
+* [mklink](http://technet.microsoft.com/en-us/library/cc753194\(WS.10\).aspx) [[/D] | [/H] | [/J]] Link Target
+
+Making these two changes will enable you to launch the project using the Google App Engine SDK Launcher.  During deployment the current .sh script changes the /static link to /static_dev/publish and a forthcoming .bat script will include this functionality.
 
 
 Enjoy
